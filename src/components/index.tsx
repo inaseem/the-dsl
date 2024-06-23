@@ -1,11 +1,11 @@
 import styled, { CSSProperties, css } from 'styled-components';
+import { getTokenValue } from '../theme';
 import {
   BorderRadiusPath,
   BorderWidthPath,
   ColorPath,
   SpacingPath,
-  getTokenValue,
-} from '../theme';
+} from '../types';
 
 export const DocList = styled.ul`
   list-style: none;

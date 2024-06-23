@@ -1,10 +1,10 @@
 import * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
+import { useTheme } from 'styled-components';
 import { AntlrDiagnosticsAdapter } from './AntlrDiagnosticsAdapter';
 import { completionItems } from './constants';
+import { Theme } from './types';
 import { hslToHex } from './utils';
-import { Theme } from './theme';
-import { useTheme } from 'styled-components';
 
 const initEditorConfig = (language: string, theme: Theme) => {
   monaco.languages.register({ id: language });

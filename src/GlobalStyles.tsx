@@ -33,6 +33,7 @@ code {
     word-wrap: break-word;
     white-space: normal;
     overflow: auto;
+    font-size : ${(props) => props.theme.typography.fonts.size[75]}px;
 }
 
 `;
