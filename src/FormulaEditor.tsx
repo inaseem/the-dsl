@@ -1,8 +1,8 @@
 import * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
+import Box from './components';
 import { PAYROLL_LANGUAGE } from './constants';
 import useEditorConfig from './useEditorConfig';
-import { Box } from '@razorpay/blade/components';
 
 const FormulaEditor = ({
   onLoad,

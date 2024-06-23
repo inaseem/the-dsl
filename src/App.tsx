@@ -3,32 +3,34 @@ const FormulaEditor = lazy(
   () => import('./FormulaEditor' /* webpackChunkName: "FormulaEditor" */)
 );
 
-import { Box, Heading, Spinner, Text } from '@razorpay/blade/components';
 import { completionItems } from './constants';
 
-import './App.css';
-import { DocList } from './components';
+import Box, { DocList, Heading, Text } from './components';
 import DocBlock from './components/DocBlock';
 
 const App = () => {
   const [isEditorLoaded, setIsEditorLoaded] = useState(false);
 
   return (
-    <Box backgroundColor="surface.background.gray.intense">
+    <Box display="flex" flexDirection="column" height="100%">
       <Box
-        padding={'spacing.7'}
+        paddingX={'spacing.7'}
+        paddingY={'spacing.5'}
         backgroundColor="surface.background.gray.moderate"
       >
-        <Heading size="large">Payroll Lang</Heading>
+        <Heading size="large" color="surface.text.gray.normal">
+          Payroll Lang
+        </Heading>
       </Box>
       <Box
+        flex={1}
         display="flex"
         gap="spacing.7"
         paddingLeft="spacing.3"
         paddingY="spacing.6"
         paddingRight="spacing.6"
         justifyContent="spaced-evenly"
-        maxHeight="calc(100vh - 120px)"
+        maxHeight="calc(100vh - 60px)"
       >
         <Box minWidth="65%" maxWidth={'65%'}>
           <Box height="100%" display="flex" flexDirection="column">
@@ -38,9 +40,7 @@ const App = () => {
               borderColor="surface.border.gray.normal"
               borderWidth={'thinner'}
             >
-              <Suspense
-                fallback={<Spinner accessibilityLabel="Loading editor" />}
-              >
+              <Suspense fallback={'Loading editor'}>
                 <FormulaEditor onLoad={() => setIsEditorLoaded(true)} />
               </Suspense>
             </Box>
@@ -68,11 +68,15 @@ const App = () => {
           </Box>
         </Box>
         {isEditorLoaded && (
-          <Box flex="1" overflowY="auto">
-            <Box>
-              <Heading>Documentation</Heading>
+          <Box
+            flex="1"
+            overflowY="auto"
+            backgroundColor="surface.background.gray.moderate"
+          >
+            <Box paddingX="spacing.6" paddingY="spacing.4">
+              <Heading color="surface.text.gray.normal">Documentation</Heading>
             </Box>
-            <Box marginTop="spacing.3">
+            <Box>
               <DocList>
                 {completionItems.map((item) => (
                   <DocBlock item={item} key={item.label.toString()} />

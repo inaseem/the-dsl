@@ -1,8 +1,8 @@
-import { Badge, Box, Heading, Text } from '@razorpay/blade/components';
+import * as monaco from 'monaco-editor';
 import { useCallback } from 'react';
 import { CompletionItem } from '../types';
 import { colorizeExampleCode } from '../utils';
-import * as monaco from 'monaco-editor';
+import Box, { Heading, Text } from './index';
 
 const DocBlock = ({ item }: { item: CompletionItem }) => {
   const exampleCode = item.documentation.example || item.insertText;
@@ -32,9 +32,30 @@ const DocBlock = ({ item }: { item: CompletionItem }) => {
           <Heading size="small" color="surface.text.gray.normal">
             {item.label.toString()}
           </Heading>
-          <Badge color={isFunction ? 'information' : 'positive'}>
-            {blockKind}
-          </Badge>
+          <Box
+            paddingX="spacing.3"
+            paddingY="spacing.1"
+            borderRadius="max"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            backgroundColor={
+              isFunction
+                ? 'feedback.background.information.subtle'
+                : 'feedback.background.positive.subtle'
+            }
+          >
+            <Text
+              size="small"
+              color={
+                isFunction
+                  ? 'feedback.text.information.intense'
+                  : 'feedback.text.positive.intense'
+              }
+            >
+              {blockKind}
+            </Text>
+          </Box>
         </Box>
         <Box marginTop="spacing.2">
           <Text color="surface.text.gray.subtle">
