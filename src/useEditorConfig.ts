@@ -106,7 +106,7 @@ const initEditorConfig = (language: string, theme: Theme) => {
     ],
     colors: {
       'editor.background': hslToHex(
-        theme.colors.surface.background.gray.intense
+        theme.colors.surface.background.gray.moderate
       ),
       'editor.foreground': hslToHex(theme.colors.surface.text.gray.subtle),
       'editorError.background': hslToHex(

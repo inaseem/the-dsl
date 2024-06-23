@@ -38,6 +38,7 @@ const App = () => {
               flex={1}
               paddingTop="spacing.6"
               borderColor="surface.border.gray.normal"
+              backgroundColor="surface.background.gray.moderate"
               borderWidth={'thinner'}
             >
               <Suspense fallback={'Loading editor'}>
