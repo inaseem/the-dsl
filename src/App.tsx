@@ -95,16 +95,15 @@ const App = () => {
                   </Box>
                 </Box>
               </Box>
-              <Box height="calc(100vh - 330px)" overflowY='auto'>
-                <Suspense fallback={'Loading editor'}>
-                  <FormulaEditor
-                    onLoad={() => setIsEditorLoaded(true)}
-                    onChange={(editorValue) => {
-                      setValue(editorValue);
-                    }}
-                  />
-                </Suspense>
-              </Box>
+              <Suspense fallback={'Loading editor'}>
+                <FormulaEditor
+                  height="calc(100vh - 330px)"
+                  onLoad={() => setIsEditorLoaded(true)}
+                  onChange={(editorValue) => {
+                    setValue(editorValue);
+                  }}
+                />
+              </Suspense>
             </Box>
             <Box>
               <Box

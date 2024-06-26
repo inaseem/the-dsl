@@ -18,7 +18,7 @@ export const DocList = styled.ul`
 
 type Spacing = SpacingPath;
 
-type BoxProps = {
+export type BoxProps = {
   display?: CSSProperties['display'];
   gap?: Spacing;
   paddingLeft?: Spacing;
@@ -41,6 +41,7 @@ type BoxProps = {
   paddingTop?: Spacing;
   overflowY?: CSSProperties['overflowY'];
   borderRadius?: BorderRadiusPath;
+  zIndex?: CSSProperties['zIndex'];
 };
 
 const Box = styled.div<BoxProps>`
@@ -163,6 +164,11 @@ const Box = styled.div<BoxProps>`
           props.borderRadius,
           props.theme.border.radius
         )}${props.borderRadius === 'round' ? '' : 'px'};
+    `}
+    ${(props) =>
+    props.zIndex &&
+    css`
+      z-index: ${props.zIndex};
     `}
 `;
 

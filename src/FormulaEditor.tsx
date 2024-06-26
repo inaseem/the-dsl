@@ -1,16 +1,17 @@
 import * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
-import Box from './components';
+import Box, { BoxProps } from './components';
 import { PAYROLL_LANGUAGE } from './constants';
 import useEditorConfig from './useEditorConfig';
 
 const FormulaEditor = ({
   onLoad,
   onChange,
+  ...boxProps
 }: {
   onLoad?: (editor: monaco.editor.IStandaloneCodeEditor) => void;
   onChange?: (value: string) => void;
-}) => {
+} & BoxProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
@@ -35,7 +36,7 @@ const FormulaEditor = ({
   }, []);
 
   return (
-    <Box height="100%">
+    <Box {...boxProps}>
       <Box ref={containerRef} id="container" height="100%" />
     </Box>
   );
