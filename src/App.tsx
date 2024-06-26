@@ -51,11 +51,11 @@ const App = () => {
         paddingRight="spacing.6"
         justifyContent="spaced-evenly"
         maxHeight="calc(100vh - 60px)"
+        overflowY="auto"
       >
-        <Box minWidth="65%" maxWidth={'65%'}>
-          <Box height="100%" display="flex" flexDirection="column">
+        <Box minWidth="65%" maxWidth={'65%'} overflowY="auto">
+          <Box>
             <Box
-              flex={1}
               borderColor="surface.border.gray.normal"
               backgroundColor="surface.background.gray.moderate"
               borderWidth={'thinner'}
@@ -75,7 +75,9 @@ const App = () => {
                       alignItems="center"
                       gap="spacing.2"
                     >
-                      <Text color="surface.text.gray.muted" size='small'>{constant} = </Text>
+                      <Text color="surface.text.gray.muted" size="small">
+                        {constant} ={' '}
+                      </Text>
                       <input
                         type="number"
                         value={value}
@@ -93,14 +95,16 @@ const App = () => {
                   </Box>
                 </Box>
               </Box>
-              <Suspense fallback={'Loading editor'}>
-                <FormulaEditor
-                  onLoad={() => setIsEditorLoaded(true)}
-                  onChange={(editorValue) => {
-                    setValue(editorValue);
-                  }}
-                />
-              </Suspense>
+              <Box height="calc(100vh - 330px)" overflowY='auto'>
+                <Suspense fallback={'Loading editor'}>
+                  <FormulaEditor
+                    onLoad={() => setIsEditorLoaded(true)}
+                    onChange={(editorValue) => {
+                      setValue(editorValue);
+                    }}
+                  />
+                </Suspense>
+              </Box>
             </Box>
             <Box>
               <Box

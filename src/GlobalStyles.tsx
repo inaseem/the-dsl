@@ -36,7 +36,7 @@ code {
     font-size : ${(props) => props.theme.typography.fonts.size[75]}px;
 }
 
-input {
+input[type="number"] {
   font-family: ${(props) => props.theme.typography.fonts.family.text};
   background-color: ${(props) => props.theme.colors.surface.background.gray.moderate};
   color: ${(props) => props.theme.colors.surface.text.gray.normal};
