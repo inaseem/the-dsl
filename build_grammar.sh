@@ -4,7 +4,7 @@
 ANTLR_JAR="antlr-4.13.1-complete.jar"
 
 # Set the path to the grammar file
-GRAMMAR_FILE="grammar/FormulaExpressions.g4"
+GRAMMAR_FILE="grammar/PayrollDSL.g4"
 
 # Set the output directory for the generated files
 OUTPUT_DIR="src"

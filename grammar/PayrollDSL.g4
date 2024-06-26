@@ -1,4 +1,4 @@
-grammar FormulaExpressions;
+grammar PayrollDSL;
 
 // The entry point of the grammar
 formula: expression EOF;
@@ -10,7 +10,7 @@ expression:
 	| functionCall
 	| literal
 	| '(' expression ')'
-	| expression '?' (lhs | boolean) ':' (lhs | boolean);
+	| expression '?' (expression) ':' (expression);
 
 functionCall: // Function calls
 	functionName '(' (expression (',' expression)*)? ')';

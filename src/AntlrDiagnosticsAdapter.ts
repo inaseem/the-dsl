@@ -1,7 +1,9 @@
 import { CharStreams, CommonTokenStream } from 'antlr4';
 import * as monaco from 'monaco-editor';
-import FormulaExpressionsLexer from './grammar/FormulaExpressionsLexer';
-import FormulaExpressionsParser from './grammar/FormulaExpressionsParser';
+import PayrollDSLLexer from './grammar/PayrollDSLLexer';
+import PayrollDSLParser from './grammar/PayrollDSLParser';
+import PayrollDSLParserErrorListener from './PayrollDSLParserErrorListener';
+import PayrollDSLLexerErrorListener from './PayrollDSLLexerErrorListener';
 
 export class AntlrDiagnosticsAdapter {
   private _editor: monaco.editor.IStandaloneCodeEditor;
@@ -50,9 +52,9 @@ export class AntlrDiagnosticsAdapter {
     message: string;
   }> {
     const inputStream = CharStreams.fromString(code);
-    const lexer = new FormulaExpressionsLexer(inputStream);
+    const lexer = new PayrollDSLLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
-    const parser = new FormulaExpressionsParser(tokenStream);
+    const parser = new PayrollDSLParser(tokenStream);
     parser.buildParseTrees = true;
 
     const errors: {
@@ -64,52 +66,40 @@ export class AntlrDiagnosticsAdapter {
 
     // Collect syntax errors from lexer and parser
     lexer.removeErrorListeners();
-    lexer.addErrorListener({
-      syntaxError(
-        recognizer,
-        offendingSymbol,
-        line,
-        charPositionInLine,
-        msg,
-        e
-      ) {
+    lexer.addErrorListener(
+      new PayrollDSLLexerErrorListener(({ error, line, message }) => {
         const errorToken = lexer.emit();
-        const message = `Unrecognized token: ${msg}`;
+        const errorMessage = `Unrecognized token: ${message}`;
         errors.push({
           line,
           startColumn: errorToken.start + 1,
           endColumn: errorToken.stop + 3,
-          message,
+          message: errorMessage,
         });
-      },
-    });
+      })
+    );
 
     parser.removeErrorListeners();
-    parser.addErrorListener({
-      syntaxError(
-        recognizer,
-        offendingSymbol,
-        line,
-        charPositionInLine,
-        msg,
-        e
-      ) {
-        const message = `Parse error: ${msg}`;
-        if (errors.length > 0) return;
-        errors.push({
-          line,
-          startColumn: offendingSymbol.start + 1,
-          endColumn: offendingSymbol.stop + 2,
-          message,
-        });
-      },
-    });
+    parser.addErrorListener(
+      new PayrollDSLParserErrorListener(
+        ({ error, offendingSymbol, line, message }) => {
+          const errorMessage = `Parse error: ${message}`;
+          if (errors.length > 0) return;
+          errors.push({
+            line,
+            startColumn: offendingSymbol.start + 1,
+            endColumn: offendingSymbol.stop + 2,
+            message: errorMessage,
+          });
+        }
+      )
+    );
 
     // Parse the code (e.g., starting from the top rule)
     try {
       parser.formula();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     return errors;
   }

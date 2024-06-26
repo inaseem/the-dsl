@@ -7,9 +7,29 @@ import { completionItems } from './constants';
 
 import Box, { DocList, Heading, Text } from './components';
 import DocBlock from './components/DocBlock';
+import { evaluatePayrollFormula } from './utils';
 
 const App = () => {
   const [isEditorLoaded, setIsEditorLoaded] = useState(false);
+  const [value, setValue] = useState('');
+  const [costants, setConstants] = useState<Array<[string, number]>>([
+    ['BASIC', 1000],
+    ['HRA', 500],
+    ['DA', 300],
+    ['PF', 200],
+    ['ESIC', 100],
+    ['PT', 50],
+    ['LTA', 150],
+  ]);
+
+  // function to update contants by index
+  const updateConstants = (index: number, value: string) => {
+    setConstants((prev) => {
+      const updated = [...prev];
+      updated[index] = [updated[index][0], parseFloat(value)];
+      return updated;
+    });
+  };
 
   return (
     <Box display="flex" flexDirection="column" height="100%">
@@ -36,13 +56,50 @@ const App = () => {
           <Box height="100%" display="flex" flexDirection="column">
             <Box
               flex={1}
-              paddingTop="spacing.6"
               borderColor="surface.border.gray.normal"
               backgroundColor="surface.background.gray.moderate"
               borderWidth={'thinner'}
             >
+              <Box
+                display="flex"
+                gap="spacing.7"
+                paddingY="spacing.6"
+                paddingX="spacing.7"
+              >
+                <Box>
+                  {/* Render and input with on change handler for all constants */}
+                  {costants.map(([constant, value], index) => (
+                    <Box
+                      key={constant}
+                      display="flex"
+                      alignItems="center"
+                      gap="spacing.2"
+                    >
+                      <Text color="surface.text.gray.muted" size='small'>{constant} = </Text>
+                      <input
+                        type="number"
+                        value={value}
+                        onChange={(e) => updateConstants(index, e.target.value)}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+                <Box>
+                  <Text color="surface.text.gray.muted">Result</Text>
+                  <Box>
+                    <Text color="surface.text.gray.normal">
+                      {evaluatePayrollFormula(value, costants)}
+                    </Text>
+                  </Box>
+                </Box>
+              </Box>
               <Suspense fallback={'Loading editor'}>
-                <FormulaEditor onLoad={() => setIsEditorLoaded(true)} />
+                <FormulaEditor
+                  onLoad={() => setIsEditorLoaded(true)}
+                  onChange={(editorValue) => {
+                    setValue(editorValue);
+                  }}
+                />
               </Suspense>
             </Box>
             <Box>

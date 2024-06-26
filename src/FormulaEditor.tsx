@@ -6,8 +6,10 @@ import useEditorConfig from './useEditorConfig';
 
 const FormulaEditor = ({
   onLoad,
+  onChange,
 }: {
   onLoad?: (editor: monaco.editor.IStandaloneCodeEditor) => void;
+  onChange?: (value: string) => void;
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -17,17 +19,20 @@ const FormulaEditor = ({
   const { initEditor, disposeEditor } = useEditorConfig(PAYROLL_LANGUAGE);
 
   useEffect(() => {
-    // Hover on each property to see its docs!
     if (containerRef.current) {
       const { editor } = initEditor(containerRef.current, value);
       editorRef.current = editor; // store editor reference
       onLoad?.(editor);
+      onChange?.(editor.getValue());
+      editor.onDidChangeModelContent(() => {
+        onChange?.(editor.getValue());
+      });
     }
     // destroy editor on unmount
     return () => {
       disposeEditor();
     };
-  }, [value, initEditor]);
+  }, []);
 
   return (
     <Box height="100%">

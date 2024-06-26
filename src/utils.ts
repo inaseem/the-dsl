@@ -1,5 +1,10 @@
 import * as monaco from 'monaco-editor';
 import { PAYROLL_LANGUAGE } from './constants';
+import antlr4 from 'antlr4';
+import PayrollDSLLexer from './grammar/PayrollDSLLexer';
+import PayrollDSLParser from './grammar/PayrollDSLParser';
+import PayrollDSLParserErrorListener from './PayrollDSLParserErrorListener';
+import PayrollDSLInterpreter from './PayrollDSLInterpreter';
 
 export const colorizeExampleCode = (text: string, htmlElement: HTMLElement) => {
   monaco.editor
@@ -62,4 +67,30 @@ export function hslToHex(hsl: string): string {
   const hex = rgbToHex(r, g, b);
 
   return a < 1 ? `${hex}${alphaToHex(a)}` : hex;
+}
+
+export function evaluatePayrollFormula(
+  input: string,
+  values: Array<[string, number]>
+): number | boolean | string {
+  const chars = new antlr4.CharStream(input);
+  const lexer = new PayrollDSLLexer(chars);
+  const tokens = new antlr4.CommonTokenStream(lexer);
+
+  const parser = new PayrollDSLParser(tokens);
+  parser.buildParseTrees = true;
+  parser.removeErrorListeners();
+  parser.addErrorListener(new PayrollDSLParserErrorListener());
+
+  let tree: antlr4.ParseTree;
+  try {
+    tree = parser.formula();
+  } catch (e: any) {
+    console.log(e.message);
+    return 'Invalid Formula';
+  }
+
+  const constants = new Map(values);
+  const interpreter = new PayrollDSLInterpreter(constants);
+  return interpreter.visit(tree);
 }

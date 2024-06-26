@@ -1,4 +1,4 @@
-// Generated from grammar/FormulaExpressions.g4 by ANTLR 4.13.1
+// Generated from grammar/PayrollDSL.g4 by ANTLR 4.13.1
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 import {
 	ATN,
@@ -11,7 +11,7 @@ import {
 	PredictionContextCache,
 	Token
 } from "antlr4";
-export default class FormulaExpressionsLexer extends Lexer {
+export default class PayrollDSLLexer extends Lexer {
 	public static readonly T__0 = 1;
 	public static readonly T__1 = 2;
 	public static readonly T__2 = 3;
@@ -89,20 +89,20 @@ export default class FormulaExpressionsLexer extends Lexer {
 
 	constructor(input: CharStream) {
 		super(input);
-		this._interp = new LexerATNSimulator(this, FormulaExpressionsLexer._ATN, FormulaExpressionsLexer.DecisionsToDFA, new PredictionContextCache());
+		this._interp = new LexerATNSimulator(this, PayrollDSLLexer._ATN, PayrollDSLLexer.DecisionsToDFA, new PredictionContextCache());
 	}
 
-	public get grammarFileName(): string { return "FormulaExpressions.g4"; }
+	public get grammarFileName(): string { return "PayrollDSL.g4"; }
 
-	public get literalNames(): (string | null)[] { return FormulaExpressionsLexer.literalNames; }
-	public get symbolicNames(): (string | null)[] { return FormulaExpressionsLexer.symbolicNames; }
-	public get ruleNames(): string[] { return FormulaExpressionsLexer.ruleNames; }
+	public get literalNames(): (string | null)[] { return PayrollDSLLexer.literalNames; }
+	public get symbolicNames(): (string | null)[] { return PayrollDSLLexer.symbolicNames; }
+	public get ruleNames(): string[] { return PayrollDSLLexer.ruleNames; }
 
-	public get serializedATN(): number[] { return FormulaExpressionsLexer._serializedATN; }
+	public get serializedATN(): number[] { return PayrollDSLLexer._serializedATN; }
 
-	public get channelNames(): string[] { return FormulaExpressionsLexer.channelNames; }
+	public get channelNames(): string[] { return PayrollDSLLexer.channelNames; }
 
-	public get modeNames(): string[] { return FormulaExpressionsLexer.modeNames; }
+	public get modeNames(): string[] { return PayrollDSLLexer.modeNames; }
 
 	public static readonly _serializedATN: number[] = [4,0,31,176,6,-1,2,0,
 	7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,
@@ -161,13 +161,13 @@ export default class FormulaExpressionsLexer extends Lexer {
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
-		if (!FormulaExpressionsLexer.__ATN) {
-			FormulaExpressionsLexer.__ATN = new ATNDeserializer().deserialize(FormulaExpressionsLexer._serializedATN);
+		if (!PayrollDSLLexer.__ATN) {
+			PayrollDSLLexer.__ATN = new ATNDeserializer().deserialize(PayrollDSLLexer._serializedATN);
 		}
 
-		return FormulaExpressionsLexer.__ATN;
+		return PayrollDSLLexer.__ATN;
 	}
 
 
-	static DecisionsToDFA = FormulaExpressionsLexer._ATN.decisionToState.map( (ds: DecisionState, index: number) => new DFA(ds, index) );
+	static DecisionsToDFA = PayrollDSLLexer._ATN.decisionToState.map( (ds: DecisionState, index: number) => new DFA(ds, index) );
 }
